@@ -1,82 +1,50 @@
-# system-prompt-injection
-
 **简体中文** | [English](README-en.md)
 
-集中维护多个本机 agent 的**公共系统提示词规则**，并把同一份内容安全同步到 CC Switch 当前支持的提示词宿主、ZCode 及 Dawud Flow 模板。配置声明 14 个目标，其中未安装宿主会跳过。
+# system-prompt-injection
+
+把 `SYSTEM_PROMPT.md` 里的一份公共提示词块，同步进本机所有 agent 配置文件。单文件、零依赖、带 TUI。
+
+```bash
+./prompt_sync.py          # TUI：看状态、diff、apply、undo、编辑源文件
+./prompt_sync.py check    # 无界面看状态（有待同步时退出码 1）
+./prompt_sync.py apply    # 无界面直接同步
+```
+
+TUI 按键：
+
+| 按键 | 作用 |
+| --- | --- |
+| `↑/↓` `j/k`，`g`/`G` | 移动选择，跳到首行 / 末行 |
+| `d` 或回车 | 查看选中目标的应用前 diff |
+| `p` | 只应用到选中的这一个目标 |
+| `a` | 应用到所有待同步目标 |
+| `e` | 用 `$EDITOR`（回退 `VISUAL`、`vi`）编辑 `SYSTEM_PROMPT.md` |
+| `u` | 恢复最近一次备份 |
+| `r` | 重新扫描 |
+| `q` / `ESC` | 退出 |
 
 ## 设计
 
-```text
-SYSTEM_PROMPT.md + targets.json
-          │
-          ├── preview / check
-          ├── apply（备份 + 原子替换）
-          ├── rollback（拒绝覆盖后续编辑）
-          └── cc-switch（只更新 prompts 表）
-```
+- `SYSTEM_PROMPT.md` 是唯一真源，`targets.json` 列出目标文件（`~` 与 `${VAR:-default}` 可用）。
+- 只管理标记内的区块，目标文件其余内容不动：
 
-`SYSTEM_PROMPT.md` 只负责公共规则；各客户端原有的专属系统提示词和本地规则保留在目标文件中。同步器只管理带有 `system-prompt-injection` 标记的区块，不覆盖整文件。`agents-orchestration` 的 route snippet 仍由其安装器管理；配置中的 3 个 `enabled: false` 条目仅用于兼容此前备份的回滚，不会被同步器读写。
+  ```text
+  <!-- system-prompt-injection:shared:start -->
+  ...同步内容...
+  <!-- system-prompt-injection:shared:end -->
+  ```
 
-## 宿主路径矩阵
+  Pi 的 `SYSTEM.md` 用 `== SYSTEM_PROMPT_INJECTION:shared:START/END ==` 标记（`format: "pi-system"`）。
 
-路径与宿主文件名按 CC Switch 的真实映射维护：
+- 状态：`ok` 已同步 · `out` 内容过期 · `new` 待插入 · `skip` 宿主未安装 · `err` 无法读取。
+- `apply` 前先把被改文件备份到 `~/.config/system-prompt-injection/backups/<时间戳>/`，再用临时文件 + `os.replace` 原子替换；TUI 里按 `u` 恢复最近一次备份。
 
-| 宿主 | 目标文件 | 状态 |
-| --- | --- | --- |
-| Claude | `~/.claude/CLAUDE.md` | 已安装 |
-| Codex | `~/.codex/AGENTS.md` | 已安装 |
-| Gemini CLI | `~/.gemini/GEMINI.md` | 可选 |
-| Grok Build | `~/.grok/AGENTS.md` | 可选 |
-| OpenCode | `~/.config/opencode/AGENTS.md` | 已安装 |
-| OpenClaw | `~/.openclaw/AGENTS.md` | 可选 |
-| Hermes | `~/.hermes/SOUL.md` | 可选 |
-| Pi | `~/.pi/agent/AGENTS.md` | 已安装 |
-| MCode | `${MINIMAX_DATA_DIR:-${MAVIS_DATA_DIR:-~/.minimax}}/AGENTS.md` | 可选 |
-
-Claude Desktop 不支持 Prompts，因此不加入同步目标。MCode 按 CC Switch 解析 `MINIMAX_DATA_DIR`、`MAVIS_DATA_DIR` 后回退到 `~/.minimax`；未安装宿主或其父目录不存在时，目标保持 skipped，不会创建无关目录。
-
-## 使用
-
-```bash
-cd ~/dev/system-prompt-injection
-python3 -m src.sync_prompts check --json
-python3 -m src.sync_prompts preview --json
-python3 -m src.sync_prompts apply
-```
-
-默认先预览；`apply` 会：
-
-- 校验源文件和所有目标；
-- 迁移本项目此前写入的旧发布策略区块；
-- 只更新托管区块，保留其他内容；
-- 在 `~/.config/agent-harness-public/prompt-backups/` 创建备份；
-- 使用同目录临时文件和 `os.replace` 原子替换。
-
-回滚：
-
-```bash
-python3 -m src.sync_prompts rollback --backup /path/to/backup
-```
-
-若目标文件在 apply 后被其他进程修改，回滚会拒绝覆盖；确认后才使用 `--force`。
-
-## CC Switch
-
-CC Switch 只作为各宿主**完整目标文件**的可选目录，不是真实源。同步前先同步目标文件，再执行：
-
-```bash
-python3 -m src.sync_prompts apply
-python3 -m src.sync_prompts cc-switch
-python3 -m src.sync_prompts cc-switch --enable
-```
-
-`cc-switch` 默认同步当前已存在且 clean 的 Claude、Codex、Gemini、Grok Build、OpenCode、OpenClaw、Hermes、Pi 和 MCode 目标；未安装宿主会跳过。MCode 通过 `apply` 直接维护其 `AGENTS.md` 文件，并执行 CC Switch 同样的 32 KiB 上限校验。也可以通过 Python API 传入 `app_types` 精确选择宿主。同步器只把完整目标文件写入 `prompts.content`，默认保持新记录禁用并保留已有启用状态；不会修改 providers、密钥、模型、skills、MCP 或其他表。`--enable` 必须显式使用，因为 CC Switch 启用后可能把完整提示词重新写回客户端文件。
-
-## 验证
+## 测试
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 -m py_compile src/sync_prompts.py
 ```
 
-本项目仅管理系统提示词公共区块，不修改 Spec 技能包。
+## 许可证
+
+PolyForm Noncommercial 1.0.0，见 [LICENSE](LICENSE)；商用需另行书面授权。

@@ -1,114 +1,33 @@
 {
-  "version": 1,
   "targets": [
     {
-      "id": "pi-agents",
-      "path": "./targets/pi-agents.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
-    },
-    {
-      "id": "pi-system",
-      "path": "./targets/pi-system.md",
-      "format": "pi-system",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "id": "claude",
+      "path": "~/.claude/CLAUDE.md"
     },
     {
       "id": "codex",
-      "path": "./targets/codex.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "path": "~/.codex/AGENTS.md"
     },
     {
       "id": "gemini",
-      "path": "./targets/gemini.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
-    },
-    {
-      "id": "claude",
-      "path": "./targets/claude.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
-    },
-    {
-      "id": "claude-common-agents",
-      "path": "./targets/claude-common-agents.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
-    },
-    {
-      "id": "grokbuild",
-      "path": "./targets/grokbuild.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "path": "~/.gemini/GEMINI.md"
     },
     {
       "id": "opencode",
-      "path": "./targets/opencode.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "path": "~/.config/opencode/AGENTS.md"
     },
     {
-      "id": "openclaw",
-      "path": "./targets/openclaw.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "id": "pi-agents",
+      "path": "~/.pi/agent/AGENTS.md"
     },
     {
-      "id": "hermes",
-      "path": "./targets/hermes.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
-    },
-    {
-      "id": "mcode",
-      "path": "./targets/mcode.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false,
-      "max_bytes": 32768
+      "id": "pi-system",
+      "path": "~/.pi/agent/SYSTEM.md",
+      "format": "pi-system"
     },
     {
       "id": "zcode",
-      "path": "./targets/zcode.md",
-      "format": "markdown",
-      "block": "shared",
-      "required": false,
-      "create_missing": false,
-      "create_parent": false
+      "path": "~/.zcode/AGENTS.md"
     }
   ]
 }

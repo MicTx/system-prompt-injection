@@ -1,34 +1,27 @@
 {
   "version": 1,
-  "source_commit": "7d33082eb241e94da4041b50f599791e2b179d7d",
+  "release": "v1.0.0",
+  "source_commit": "83e2893a127e3d6879f07b9d8898c1da51cb5a8a",
   "files": [
     ".gitignore",
     "README.md",
     "README-en.md",
-    "SYSTEM_PROMPT.md",
     "LICENSE",
+    "SYSTEM_PROMPT.md",
     "pyproject.toml",
     "targets.json",
-    "src/__init__.py",
-    "src/sync_prompts.py",
-    "tests/test_sync_prompts.py",
-    "tests/test_public_export.py",
-    "tools/__init__.py",
-    "tools/export_public.py"
+    "prompt_sync.py",
+    "tests/test_prompt_sync.py"
   ],
   "sha256": {
     ".gitignore": "8d4190964b6c16ee6504aff94e12f9b46103d35d242cbfdf7a3324814076da6c",
-    "README.md": "ba9fab744a015df223cb97ef5829f0e66ea831a08dcd05ab0de027ab0eb1b891",
-    "README-en.md": "93ee49a534356b494ca01122ee9592da83b0c0200cc55ab19b43532d9218e790",
-    "SYSTEM_PROMPT.md": "0d03cf72def2b6bbb2c1c05ba586fb43de2256f2aa5566a85ba3df5b5ecaf5c2",
+    "README.md": "a0a98d2867d76fb115a308d5052c4743897d6eaefca5c5f8d13d0fcebcec19f6",
+    "README-en.md": "732de368934eca3a299048e2fd55686319491dd22cc48394a78a698ce5041145",
     "LICENSE": "d16c4d7c8b388cdca3d72ab158f7804a47305c7c223767e3aa0eb6f8aa3d6221",
-    "pyproject.toml": "a16b3eb8247da54847013431e5d287cbed6a4b6213f63951412476dd57682e8f",
-    "targets.json": "c26a049ea623c0e6a3784128dce3c508e1d8d201e2d427d0b264bf3327002f29",
-    "src/__init__.py": "b2eb60f38746fef3d0ead89a7367dcf56202ccff80bad83bed79f6efaa5029ee",
-    "src/sync_prompts.py": "146671382306130dea8ae5c7c05f60e56b3871dddaa0d13dab2d4d3aaa614ba1",
-    "tests/test_sync_prompts.py": "f3b9f4a255b1e8d68c5e12c85dfc33a239b4eb3549beee19b992fe26f8568ae1",
-    "tests/test_public_export.py": "2a0ee29e8038b587a03b83444dfd383f5e578681ff6b483f66327207b112a6df",
-    "tools/__init__.py": "597386aca16fa7674c26d332de86cc0d704d7447d9fea3dafb32fc094dd01d78",
-    "tools/export_public.py": "65dea0a4d6ddb2a80dbf153c81bd3ee0b1ee8fff781496455ee0c1ea2fd646b7"
+    "SYSTEM_PROMPT.md": "5d86357ef970881ea6196787ddaf91bede1e18ff7afb18b70d7a9c166aaea4bd",
+    "pyproject.toml": "c49a7db2f6c13f3dcd51ab0aed68f61be75c6cacb1e745cde629a5b57bc2fff4",
+    "targets.json": "ac8445cd31d432b20624d8cff304242cb2bfef58db4d081a4f22b163020849bc",
+    "prompt_sync.py": "6f5d8039ab5330e9f246c5801d3f2082abd381c6b8c068fadbf2193985a73d49",
+    "tests/test_prompt_sync.py": "e210b1c0857627039ea2c2d56df5c1e32fcdf73b64a826d783115fdccc2fc49f"
   }
 }

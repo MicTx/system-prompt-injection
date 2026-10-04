@@ -2,69 +2,49 @@
 
 [简体中文](README.md) | **English**
 
-Single-source synchronization for shared system-prompt rules across local agent hosts.
-
-## Features
-
-- **One authored source** — edit `SYSTEM_PROMPT.md`; `targets.json` declares destinations.
-- **Managed blocks** — preserve host-specific instructions outside marked regions.
-- **Fail-closed writes** — validate UTF-8, duplicate markers, symlinks, paths, and conflicts before writing.
-- **Atomic updates** — create private mode-700 backups and replace files atomically.
-- **CC Switch integration** — update only the `prompts` table and preserve enabled state by default.
-- **Host matrix** — Claude, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw, Hermes, Pi, ZCode, Dawud Flow templates, and optional MCode support.
-
-## Quick start
-
-Requires Python 3.9+ and the standard library.
+Sync one shared prompt block from `SYSTEM_PROMPT.md` into every local agent config file. Single file, zero dependencies, with a TUI.
 
 ```bash
-cd system-prompt-injection
-python3 -m unittest discover -s tests -v
-python3 -m src.sync_prompts check --json
-python3 -m src.sync_prompts apply
+./prompt_sync.py          # TUI (default)
+./prompt_sync.py check    # headless status (exit code 1 when targets are pending)
+./prompt_sync.py apply    # headless sync
 ```
 
-`apply` updates only declared managed blocks. Optional hosts are skipped when their parent directory is absent. Backups are written under `~/.config/agent-harness-public/prompt-backups/`.
+## Design
 
-## Host paths
+- `SYSTEM_PROMPT.md` is the single source; `targets.json` lists destinations (`~` and `${VAR:-default}` are allowed in paths).
+- Only the marked block is managed; everything else in a target file stays untouched:
 
-| Host | Prompt file |
+  ```text
+  <!-- system-prompt-injection:shared:start -->
+  ...synced content...
+  <!-- system-prompt-injection:shared:end -->
+  ```
+
+  Pi's `SYSTEM.md` uses `== SYSTEM_PROMPT_INJECTION:shared:START/END ==` markers (`format: "pi-system"`).
+
+- Target states: `ok` synced · `out` stale · `new` to insert · `skip` host not installed · `err` unreadable.
+- Applying backs up changed files to `~/.config/system-prompt-injection/backups/<timestamp>/` first, then replaces them atomically via a temp file and `os.replace`; press `u` in the TUI to restore the latest backup.
+
+## TUI keys
+
+| Key | Action |
 | --- | --- |
-| Claude | `~/.claude/CLAUDE.md` |
-| Codex | `~/.codex/AGENTS.md` |
-| Gemini CLI | `~/.gemini/GEMINI.md` |
-| Grok Build | `~/.grok/AGENTS.md` |
-| OpenCode | `~/.config/opencode/AGENTS.md` |
-| OpenClaw | `~/.openclaw/AGENTS.md` |
-| Hermes | `~/.hermes/SOUL.md` |
-| Pi | `~/.pi/agent/AGENTS.md` |
-| MCode | `${MINIMAX_DATA_DIR:-${MAVIS_DATA_DIR:-~/.minimax}}/AGENTS.md` |
+| `↑/↓` `j/k`, `g`/`G` | Move selection; jump to first / last row |
+| `d` or Enter | Preview the diff for the selected target |
+| `p` | Apply to the selected target only |
+| `a` | Apply to all pending targets |
+| `e` | Edit `SYSTEM_PROMPT.md` in `$EDITOR` (falls back to `VISUAL`, then `vi`) |
+| `u` | Restore the latest backup |
+| `r` | Rescan |
+| `q` / `ESC` | Quit |
 
-Claude Desktop does not support prompts in this matrix. MCode is limited to 32 KiB, matching the host integration.
-
-## Commands
-
-```bash
-python3 -m src.sync_prompts preview --json
-python3 -m src.sync_prompts check --json
-python3 -m src.sync_prompts apply
-python3 -m src.sync_prompts cc-switch
-python3 -m src.sync_prompts cc-switch --enable
-python3 -m src.sync_prompts rollback --backup /path/to/backup
-```
-
-CC Switch synchronization writes complete host prompt files to its `prompts` table. New records stay disabled; existing enabled state changes only with `--enable`. Provider, credential, model, skill, and MCP tables are not modified.
-
-## Development
+## Tests
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 -m py_compile src/sync_prompts.py tools/export_public.py
-ruff check src tests tools
 ```
-
-The public snapshot is generated from an allowlist and verified by `tools/export_public.py`. Local agent state, private paths, credentials, backups, and workflow records are excluded.
 
 ## License
 
-[PolyForm Noncommercial License 1.0.0](LICENSE). Commercial use is not permitted under the default license terms.
+PolyForm Noncommercial 1.0.0 — see [LICENSE](LICENSE). Commercial use requires separate written authorization.
