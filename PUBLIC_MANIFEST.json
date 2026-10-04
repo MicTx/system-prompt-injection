@@ -1,27 +1,31 @@
 {
   "version": 1,
-  "release": "v1.0.0",
-  "source_commit": "83e2893a127e3d6879f07b9d8898c1da51cb5a8a",
+  "release": "v1.0.1",
+  "source_commit": "9ddfea5ed8f5a613cf69c9a5786b03827bd6b687",
   "files": [
     ".gitignore",
-    "README.md",
-    "README-en.md",
+    "CONTRIBUTING.md",
     "LICENSE",
+    "README-en.md",
+    "README.md",
+    "SECURITY.md",
     "SYSTEM_PROMPT.md",
+    "prompt_sync.py",
     "pyproject.toml",
     "targets.json",
-    "prompt_sync.py",
     "tests/test_prompt_sync.py"
   ],
   "sha256": {
     ".gitignore": "8d4190964b6c16ee6504aff94e12f9b46103d35d242cbfdf7a3324814076da6c",
-    "README.md": "a0a98d2867d76fb115a308d5052c4743897d6eaefca5c5f8d13d0fcebcec19f6",
-    "README-en.md": "732de368934eca3a299048e2fd55686319491dd22cc48394a78a698ce5041145",
+    "CONTRIBUTING.md": "c8679842adcce44fd1ca516eb1eb12c6fc5f727dba3e39b0229beeed7c2594b7",
     "LICENSE": "d16c4d7c8b388cdca3d72ab158f7804a47305c7c223767e3aa0eb6f8aa3d6221",
+    "README-en.md": "af103f5c1d8a531bcde0251e4bacb666b8202667396a3cd0ebed82e50f9d70ba",
+    "README.md": "69017c3d1a253a4541c7df1aa97bf80cbf16bc2451893d3b362eaeeb621961ee",
+    "SECURITY.md": "932e73f3ffb2c3d3d40b64053383c7cc72e3fbdf8baf0d5935296307de719b35",
     "SYSTEM_PROMPT.md": "5d86357ef970881ea6196787ddaf91bede1e18ff7afb18b70d7a9c166aaea4bd",
-    "pyproject.toml": "c49a7db2f6c13f3dcd51ab0aed68f61be75c6cacb1e745cde629a5b57bc2fff4",
-    "targets.json": "ac8445cd31d432b20624d8cff304242cb2bfef58db4d081a4f22b163020849bc",
     "prompt_sync.py": "6f5d8039ab5330e9f246c5801d3f2082abd381c6b8c068fadbf2193985a73d49",
+    "pyproject.toml": "9cf4f79e746967a8cdf8e66f7efbc55ed3847ab919c666c924cc5e6407473bfe",
+    "targets.json": "ac8445cd31d432b20624d8cff304242cb2bfef58db4d081a4f22b163020849bc",
     "tests/test_prompt_sync.py": "e210b1c0857627039ea2c2d56df5c1e32fcdf73b64a826d783115fdccc2fc49f"
   }
 }

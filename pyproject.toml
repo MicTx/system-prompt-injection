@@ -1,7 +1,7 @@
 [project]
 name = "system-prompt-injection"
-version = "1.0.0"
-description = "Minimal single-file TUI that syncs one shared prompt block into local agent files"
+version = "1.0.1"
+description = "Minimal single-file TUI that syncs one shared prompt block into local agent config files"
 requires-python = ">=3.9"
 dependencies = []
 
