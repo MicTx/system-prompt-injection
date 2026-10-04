@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "pi-agents",
+      "path": "./targets/pi-agents.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "pi-system",
+      "path": "./targets/pi-system.md",
+      "format": "pi-system",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "codex",
+      "path": "./targets/codex.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "gemini",
+      "path": "./targets/gemini.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "claude",
+      "path": "./targets/claude.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "claude-common-agents",
+      "path": "./targets/claude-common-agents.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "grokbuild",
+      "path": "./targets/grokbuild.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "opencode",
+      "path": "./targets/opencode.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "openclaw",
+      "path": "./targets/openclaw.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "hermes",
+      "path": "./targets/hermes.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    },
+    {
+      "id": "mcode",
+      "path": "./targets/mcode.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false,
+      "max_bytes": 32768
+    },
+    {
+      "id": "zcode",
+      "path": "./targets/zcode.md",
+      "format": "markdown",
+      "block": "shared",
+      "required": false,
+      "create_missing": false,
+      "create_parent": false
+    }
+  ]
+}
